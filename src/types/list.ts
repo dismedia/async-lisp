@@ -16,6 +16,7 @@ export const createList: TypeCreator<Compileable[]> = (value) => async (context)
 const handleExecution = (arr: any[], context) => {
 
 
+    console.log('executing with', arr)
 
     const [f, ...params] = arr;
 
