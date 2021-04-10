@@ -2,13 +2,24 @@ import {TypeCreator} from "./domain";
 import {Compileable, Plain} from "../domain";
 
 
-export const createList: TypeCreator<Compileable[]> = (value) => (context) => {
+export const createList: TypeCreator<Compileable[]> = (value) => async (context) => {
+
+    const result = await Promise.all(value.map(e => e(context)))
+    const a = result as Array<any>
 
 
-    const g: Promise<Plain | Plain[]> =value[0](context)
-    const g1: Promise<Plain | Plain[]> =value[0](context)
+    return (a.length && a.length > 0 && typeof a[0] === 'function') ? handleExecution(result, context) : result
 
-    //const all: Promise<[(string | number | Plain[]), (string | number | Plain[])]> =Promise.all([value[0](context),value[0](context)])
-    return Promise.all(value.map(e=>e(context)))
+}
+
+
+const handleExecution = (arr: any[], context) => {
+
+
+
+    const [f, ...params] = arr;
+
+    return f(...params)
+
 
 }

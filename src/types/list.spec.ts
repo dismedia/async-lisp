@@ -15,7 +15,7 @@ describe("list", () => {
 
         const result = await list(null)
 
-        expect(result).to.eql([[3, '.', 14, 15]])
+        expect(result).to.eql([3, '.', 14, 15])
 
     })
 
@@ -36,6 +36,7 @@ describe("list", () => {
 
 
         const result = await list(null)
+
 
         expect(result).to.eql([
                 "foo", [
