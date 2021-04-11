@@ -154,7 +154,7 @@ describe("functions", () => {
     })
 
     describe("list op", () => {
-        it.only("sholud be able to get head", async () => {
+        it("sholud be able to get head", async () => {
 
             const context = createContext({head});
 
