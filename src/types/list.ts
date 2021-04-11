@@ -1,11 +1,16 @@
 import {TypeCreator} from "./domain";
 import {Compileable, Plain} from "../domain";
+import type = Mocha.utils.type;
 
 
-export const createList: TypeCreator<Compileable[]> = (value) => async (context) => {
+export const createList: TypeCreator<Compileable[]> = (input) => async (context,override) => {
 
 
-    const [first, ...rest] = value
+    if(override && typeof override=="function"){
+        return await override(input) as any
+    }
+
+    const [first, ...rest] = input
 
     const firstEvaluated = await first(context)
 
