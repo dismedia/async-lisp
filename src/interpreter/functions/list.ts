@@ -1,6 +1,5 @@
-//export const list=
 import {FunctionDef} from "./domain";
-import {Compileable, Plain} from "../domain";
+import {Compilable} from "../../domain";
 
 export const head: FunctionDef = (...elements) => async (context) => {
 
@@ -8,15 +7,13 @@ export const head: FunctionDef = (...elements) => async (context) => {
         return input[0](context)
     })
 
-
 }
 
 
 export const tail: FunctionDef = (...elements) => async (context) => {
 
-    return await elements[0](context, async (input: Compileable[]) => {
-        const [h, ...tailEl] = input
-        //return Promise.all([input[1](context)])
+    return await elements[0](context, async (input: Compilable[]) => {
+        const [, ...tailEl] = input
         return Promise.all(tailEl.map(e => e(context)))
     })
 

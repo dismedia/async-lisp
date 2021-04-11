@@ -29,7 +29,7 @@ describe("functions", () => {
 
     })
 
-    it("should be able to tell if eqal (primitive or ref, no casting allowed )", async () => {
+    it("should be able to tell if equal (primitive or ref, no casting allowed )", async () => {
 
         const context = createContext({eq})
         const resultTrue1 = await createList([createIdentifier("eq"), ...[1, 1].map(e => createPrimitive(e))])(context)

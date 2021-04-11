@@ -6,7 +6,7 @@ export const add: FunctionDef = (...elements) => async (context) => {
 
     const components = await Promise.all(elements.map(e => e(context)));
 
-    console.log(components);
+
 
     return components.reduce((a, v) => (a as number) + (v as number), 0)
 }

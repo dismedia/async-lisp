@@ -1,6 +1,6 @@
-import {Compileable} from "../domain";
+import {Compilable} from "../domain";
 
-export type Lexer=(string)=>Compileable
+export type Lexer=(str:string)=>Compilable
 
 
 export interface CompilableCreators {

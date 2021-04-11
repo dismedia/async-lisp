@@ -1,5 +1,4 @@
 import {FunctionDef} from "./domain";
-import {Plain} from "../domain";
 import {createContext} from "../context";
 
 export const lambda: FunctionDef = (...elements) => async (context) => {
