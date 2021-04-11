@@ -43,7 +43,7 @@ describe("functions", () => {
 
     })
 
-    it.only("should be able to handle conditions (primitive casting))", async () => {
+    it("should be able to handle conditions (primitive casting))", async () => {
 
         const context = createContext({iff})
         const resultTrue = await createList([createIdentifier("iff"), createPrimitive(1),createPrimitive(10),createPrimitive(20) ])(context)

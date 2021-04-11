@@ -4,23 +4,25 @@ import {Compileable, Plain} from "../domain";
 
 export const createList: TypeCreator<Compileable[]> = (value) => async (context) => {
 
-    const result = await Promise.all(value.map(e => e(context)))
-    const a = result as Array<any>
 
+    const [first, ...rest] = value
 
-    return (a.length && a.length > 0 && typeof a[0] === 'function') ? handleExecution(result, context) : result
+    const firstEvaluated = await first(context)
+
+    return (typeof firstEvaluated === 'function') ? handleExecution(firstEvaluated,rest, context) :
+        Promise.all([
+            Promise.resolve(firstEvaluated), //mimic resolving
+            ...rest.map(e => e(context))
+        ])
 
 }
 
 
-const handleExecution = (arr: any[], context) => {
+const handleExecution = (f:any,params: Compileable[], context) => {
 
 
-    console.log('executing with', arr)
-
-    const [f, ...params] = arr;
-
-    return f(...params)
+    console.log('executing with', f,params)
+    return f(...params)(context)
 
 
 }

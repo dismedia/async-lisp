@@ -9,8 +9,10 @@ describe("function execution", () => {
 
 
         const context = createContext({
-            f1: (param) => {
-                expect(param).to.eql("foo")
+            f1: (param) => async (context) => {
+
+                const r = await param(context)
+                expect(r).to.eql("foo")
                 done()
             }
         })
