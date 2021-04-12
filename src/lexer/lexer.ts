@@ -1,9 +1,6 @@
-import {CompilableCreators, Lexer} from "./domain";
+import {CompilableCreators, Interperter} from "./domain";
 import {Compilable} from "../domain";
 
-
-export const createLexer: (cc: CompilableCreators) => Lexer = (cc) => (str) =>
-    parse(analyze(clean(str)),cc)
 
 export const clean = (input: string) =>
     input.split('"')
@@ -34,9 +31,23 @@ export const analyze = (input, list = []) => {
 };
 
 export const parse: (input, cc: CompilableCreators) => Compilable = (input, cc: CompilableCreators) => {
-    if (!isNaN(parseFloat(input))) return cc.primitiveCreator(input)
-    if (input[0] === "'") return cc.primitiveCreator(input.slice(1, -1))
+
+    // console.log("input ",input);
+    // console.log("arr",Array.isArray(input));
+    //
+    if(Array.isArray(input)){
+        console.log("len",input.length);
+        console.log("map",input.map(e => parse(e, cc)));
+    }
+
+
     if (Array.isArray(input)) return cc.listCreator(input.map(e => parse(e, cc)))
+    const n = parseFloat(input)
+    if (!isNaN(n)) return cc.primitiveCreator(n)
+    if (input[0] && input[0].charCodeAt(0) == 34) return cc.primitiveCreator(input.slice(1, -1))
+
+
+
 
     return cc.identifierCreator(input)
 

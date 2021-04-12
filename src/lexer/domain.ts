@@ -1,6 +1,6 @@
 import {Compilable} from "../domain";
 
-export type Lexer=(str:string)=>Compilable
+export type Interperter =(str:string)=>Compilable
 
 
 export interface CompilableCreators {
