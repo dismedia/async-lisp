@@ -20,7 +20,7 @@ export const lambda: FunctionDef = (...elements) => async (context) => {
 
     }) as string[]
 
-    console.log(params)
+    //console.log(params)
 
     return ((args) => async (context) => {
 

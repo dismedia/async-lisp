@@ -16,7 +16,6 @@ export const delay: FunctionDef = (...elements) => async (context) => {
             console.log(`delay ${name} : ${s}`);
             if (s < 1) {
 
-
                 resolve()
                 clearInterval(iid)
             }

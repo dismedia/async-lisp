@@ -4,7 +4,7 @@ import {Compilable} from "../../domain";
 export const createList: TypeCreator<Compilable[]> = (input) => async (context, override) => {
 
     if (override && typeof override == "function") {
-        console.log("compilation override:",input);
+        //console.log("compilation override:",input);
         return await override(input) as any
     }
 

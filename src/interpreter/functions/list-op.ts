@@ -33,7 +33,6 @@ export const tail:FunctionDef = (...elements) => async (context)=>{
 
     const result = await elements[0](context) as Plain[];
     const [h,...t] =result;
-    console.log("!!!!!!!!!!!!",result )
     return t;
 
 
