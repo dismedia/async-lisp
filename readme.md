@@ -13,7 +13,7 @@ npm i
 
 ### test
 ```
-npm i
+npm test
 ```
 
 
@@ -41,7 +41,7 @@ you can easily implement asynchronous operators, import pieces of code at runtim
 ```axios``` to do http
 
 ### some of tested expressions
-
+see: ```lisp.spec.ts``` 
 ```lisp
 1
 "lisp"
