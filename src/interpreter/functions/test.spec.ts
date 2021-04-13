@@ -4,7 +4,7 @@ import {createList} from "../types/list";
 import {createIdentifier} from "../types/identifier";
 import {createPrimitive} from "../types/primitive";
 import {expect} from "chai";
-import {eq} from "./eq";
+import {eq} from "./compare";
 import {iff} from "./if";
 import {lett} from "./let";
 import {lambda} from "./lambda";
