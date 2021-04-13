@@ -3,7 +3,7 @@ import {createContext} from "./interpreter/context";
 import {buildInterpreter, interpret} from "./lisp";
 import {compilableCreatorsVerbose} from "./interpreter/compilableCreators";
 import {add, sumArray} from "./interpreter/functions/add";
-import {eq} from "./interpreter/functions/eq";
+import {eq} from "./interpreter/functions/compare";
 import {lett} from "./interpreter/functions/let";
 import {head, headLazy, tail, tailLazy} from "./interpreter/functions/list-op";
 import {httpGet} from "./interpreter/functions/http";
@@ -372,7 +372,8 @@ describe("lisp", () => {
         it("should compile remote code (executed with x form lett) and execute function on it", async () => {
 
 
-            const result = await interpret(`(lett ((x 99)) (httpGet url (status source) (sumArray (compile source))) )`)(createContext({
+            const result = await interpret(`(lett ((x 99)) (httpGet url (status source) (sumArray (compile source))) )`)
+            (createContext({
                 httpGet,
                 lett,
                 sumArray,
