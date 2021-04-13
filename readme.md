@@ -92,7 +92,17 @@ see: ```lisp.spec.ts```
 (iff (eq 10 10) (willExecuteMock) (willNotExecuteMock))
 (iff (eq 11 10) (willExecuteMock) (willNotExecuteMock))
 (httpGet url (status source) (compile source))
-(lett ((x 99)) (httpGet url (status source) (sumArray (compile source))) )
+(lett ((x 99)) (httpGet url (status source) (sumArray (compile source))))
+(defun F (x) x ( F ((add 6 -1)) ))
+(defun F (x y) (add y x y x 1) (F (88 14)))
+(
+            defun fib (x) 
+                (iff (lte x 1) 
+                    1 
+                    (add (fib(add -1 x)) (fib(add -2 x)))
+                ) 
+            (fib fibN)
+        )
 ```
 
 
