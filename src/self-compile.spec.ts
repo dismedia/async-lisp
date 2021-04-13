@@ -20,7 +20,7 @@ describe("self compile", () => {
 
     })
 
-    it.only("compile from scope source using value from let", async () => {
+    it("compile from scope source using value from let", async () => {
 
 
         const result = await interpret(`(lett ((x 9) (y 4) (z 1000 ))(compile source))`)(createContext({

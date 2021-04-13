@@ -23,7 +23,7 @@ export const lett: FunctionDef = (...elements) => async (context) => {
                     //(let ((x ->0) (y ->1)) (x y)) compile variable value like anything else
                     const value = await input[1](context);
 
-                    console.log(name,value)
+                    //console.log(name,value)
                     return ({name,value}) as any
 
                 })

@@ -3,6 +3,14 @@ import {createContext} from "../context";
 
 export const lambda: FunctionDef = (...elements) => async (context) => {
 
+    // return ((args)=>async (context)=>{
+    //
+    //
+    //
+    //
+    // })
+
+
     return ((args) => async (context) => {
 
         //resolver args

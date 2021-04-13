@@ -25,7 +25,7 @@ export const createList: TypeCreator<Compilable[]> = (input) => async (context, 
 
 const handleExecution = (f: any, params: Compilable[], context) => {
 
-    console.log('executing with', f, params)
+    //console.log('executing with', f, params)
     return f(...params)(context)
 
 

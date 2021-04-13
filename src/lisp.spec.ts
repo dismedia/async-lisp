@@ -5,7 +5,8 @@ import {compilableCreatorsVerbose} from "./interpreter/compilableCreators";
 import {add, sumArray} from "./interpreter/functions/add";
 import {eq} from "./interpreter/functions/eq";
 import {lett} from "./interpreter/functions/let";
-import {head} from "./interpreter/functions/list";
+import {head, headLazy, tail, tailLazy} from "./interpreter/functions/list-op";
+import {httpGet} from "./interpreter/functions/http";
 
 
 describe("lisp", () => {
@@ -52,15 +53,60 @@ describe("lisp", () => {
 
         const result = await interpret(`(a c b)`)(createContext({a: "aa", b: 1, c: 2}))
         expect(result).to.eql(["aa", 2, 1]);
-
-
     })
 
+
+    describe("lisp op", () => {
+        it("extract head", async () => {
+
+            //x is undefined but, not evaluated
+            const result = await interpret(`(headLazy ((add 90 9) 4 x))`)(createContext({headLazy, add}))
+            expect(result).to.eql(99);
+
+        })
+
+        it("extract tail / lazy", async () => {
+
+            //x is undefined but, not evaluated
+            const result = await interpret(`(tailLazy (x 99 4))`)(createContext({tailLazy}))
+            expect(result).to.eql([99, 4]);
+
+        })
+
+
+        it("extract head from tail ", async () => {
+            const result1 = await interpret(`(head(tail((0 0) (99 5) 0)))`)(createContext({head, tail}))
+            expect(result1).to.eql([99, 5]);
+
+            const result2 = await interpret(`(head(head(tail((0 0) (99 5) 0))))`)(createContext({head, tail}))
+            expect(result2).to.eql(99);
+
+
+        })
+
+        it("extract tail from tail / lazy", async () => {
+
+            //x is undefined but, not evaluated
+            const result = await interpret(`(tailLazy (x (tailLazy(99 5 4)) ) )`)(createContext({tailLazy}))
+            expect(result).to.eql([[5, 4]]);
+
+        })
+
+        it("extract tail from tail", async () => {
+
+            const result = await interpret(`( tail(tail(tail(1 2 3 4)))) )`)(createContext({tail}))
+            expect(result).to.eql([[4]]);
+
+        })
+
+
+    });
 
     it("add", async () => {
 
         const result1 = await interpret(`(add 1 20)`)(createContext({add}))
         expect(result1).to.eql(21);
+
 
         const result2 = await interpret(`(add 1 four 5 (add (add 3 3 3) (add 10 1)) 2)`)(createContext({add, four: 4}))
         expect(result2).to.eql(32);
@@ -68,6 +114,9 @@ describe("lisp", () => {
 
         const result3 = await interpret(`( 4 ( add 1 20) (add 30 10))`)(createContext({add}))
         expect(result3).to.eql([4, 21, 40]);
+
+        const result4 = await interpret(`( add  (add 4 1) 4)`)(createContext({add}))
+        expect(result4).to.eql(9);
 
 
     })
@@ -161,6 +210,21 @@ describe("lisp", () => {
         }))
 
         expect(result9).to.eql(103)
+
+
+    })
+
+
+    it("http get", async () => {
+
+
+        const result = await interpret(`(httpGet url)`)(createContext({
+            httpGet,
+            url: 'https://gist.githubusercontent.com/dismedia/f436e17e9145e7c051d4dfbbbf9f31af/raw/d8bc37909391ca08c1596105e905c76633a69a39/gistfile1.txt'
+
+        }))
+
+        expect(result).to.eql("(1 2 x)")
 
 
     })

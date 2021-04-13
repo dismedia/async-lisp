@@ -35,10 +35,10 @@ export const parse: (input, cc: CompilableCreators) => Compilable = (input, cc: 
     // console.log("input ",input);
     // console.log("arr",Array.isArray(input));
     //
-    if(Array.isArray(input)){
-        console.log("len",input.length);
-        console.log("map",input.map(e => parse(e, cc)));
-    }
+    // if(Array.isArray(input)){
+    //     console.log("len",input.length);
+    //     console.log("map",input.map(e => parse(e, cc)));
+    // }
 
 
     if (Array.isArray(input)) return cc.listCreator(input.map(e => parse(e, cc)))

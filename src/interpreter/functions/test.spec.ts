@@ -9,7 +9,7 @@ import {iff} from "./if";
 import {lett} from "./let";
 import {lambda} from "./lambda";
 import {delay} from "./async";
-import {head, tail} from "./list";
+import {head, tailLazy} from "./list-op";
 
 
 describe("functions", () => {
@@ -174,10 +174,10 @@ describe("functions", () => {
         it("sholud be able to get tail", async () => {
 
 
-            const context = createContext({tail});
+            const context = createContext({tailLazy});
 
             const result = await createList([
-                createIdentifier("tail"),
+                createIdentifier("tailLazy"),
                 createList([
                     createPrimitive(1),
                     createPrimitive(2),
