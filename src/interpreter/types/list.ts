@@ -20,7 +20,6 @@ export const createList: TypeCreator<Compilable[]> = (input) => async (context, 
             Promise.resolve(firstEvaluated), //mimic resolving
             ...rest.map(e => e(context))
         ])
-
 }
 
 
