@@ -101,7 +101,6 @@ describe("functions", () => {
             expect(result).to.eql(['hello', 'bar!'])
         })
 
-
     })
 
     describe("lambda", () => {
@@ -214,3 +213,7 @@ describe("functions", () => {
 
 
 });
+
+
+
+

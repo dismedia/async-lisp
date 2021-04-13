@@ -7,6 +7,8 @@ import {eq} from "./interpreter/functions/eq";
 import {lett} from "./interpreter/functions/let";
 import {head, headLazy, tail, tailLazy} from "./interpreter/functions/list-op";
 import {httpGet} from "./interpreter/functions/http";
+import {lambda} from "./interpreter/functions/lambda";
+import {compile} from "./interpreter/functions/compile";
 
 
 describe("lisp", () => {
@@ -73,7 +75,6 @@ describe("lisp", () => {
 
         })
 
-
         it("extract head from tail ", async () => {
             const result1 = await interpret(`(head(tail((0 0) (99 5) 0)))`)(createContext({head, tail}))
             expect(result1).to.eql([99, 5]);
@@ -107,12 +108,10 @@ describe("lisp", () => {
         const result1 = await interpret(`(add 1 20)`)(createContext({add}))
         expect(result1).to.eql(21);
 
-
-        const result2 = await interpret(`(add 1 four 5 (add (add 3 3 3) (add 10 1)) 2)`)(createContext({add, four: 4}))
+        const result2 = await interpret(`(add 1 four (add (add 3 3 3) (add 10 1)) 2)`)(createContext({add, four: 4}))
         expect(result2).to.eql(32);
 
-
-        const result3 = await interpret(`( 4 ( add 1 20) (add 30 10))`)(createContext({add}))
+        const result3 = await interpret(`( 4 (add 1 20) (add 30 10))`)(createContext({add}))
         expect(result3).to.eql([4, 21, 40]);
 
         const result4 = await interpret(`( add  (add 4 1) 4)`)(createContext({add}))
@@ -135,12 +134,22 @@ describe("lisp", () => {
         const result4 = await interpret(`(eq "a" "b")`)(createContext({eq}))
         expect(result4).to.eql(false);
 
-
         const result5 = await interpret(`(eq "1" 1)`)(createContext({eq}))
         expect(result5).to.eql(false);
+
+        const result6 = await interpret(`(eq a b)`)(createContext({eq, a: 1, b: 1}))
+        expect(result6).to.eql(true);
+
+        const result7 = await interpret(`(eq a b)`)(createContext({eq, a: 1, b: 3}))
+        expect(result7).to.eql(false);
     })
 
     it("lett", async () => {
+
+
+        //(let ((s (add 4 5)) (g 4)) (  s g  ) ) => [1,4]
+        //lambda ((a b c) ( a c c c)) (1 2 3) ->[ 1,3,3,3]
+
         const result1 = await interpret(`(lett ((x 55) (y 44)) ( x y "bar"))`)(createContext({
             lett,
         }))
@@ -203,31 +212,82 @@ describe("lisp", () => {
 
         expect(result8).to.eql([[1, 2], [1, 2]])
     })
+
+
     it("lett", async () => {
 
         const result9 = await interpret(`(lett ((x (1 2 100))) (sumArray x))`)(createContext({
             lett, sumArray, head
         }))
-
         expect(result9).to.eql(103)
-
-
     })
 
 
     it("http get", async () => {
 
 
-        const result = await interpret(`(httpGet url)`)(createContext({
+
+        const result = await interpret(`(httpGet url (httpStatus data) (data httpStatus))`)(createContext({
             httpGet,
+            //this url returns exactly "(1 2 x)" string
             url: 'https://gist.githubusercontent.com/dismedia/f436e17e9145e7c051d4dfbbbf9f31af/raw/d8bc37909391ca08c1596105e905c76633a69a39/gistfile1.txt'
 
         }))
 
-        expect(result).to.eql("(1 2 x)")
+        expect(result).to.eql(["(1 2 x)", 200])
 
 
     })
 
+
+
+
+    describe("lambda", () => {
+        it("execute", async () => {
+
+            const result = await interpret(`((lambda (x y z)(z y x y z))( 1 2 3) )`)(createContext({
+                lambda
+            }))
+            expect(result).to.eql([3, 2, 1, 2, 3])
+
+        })
+
+        it("execute with scope", async () => {
+
+            const result = await interpret(`
+            
+            (lett ((a 1)(b 2)(c 3)) ((lambda (x y z)(z y x y z))(a b c)) ) 
+            
+            `)(createContext({
+                lambda, lett
+
+            }))
+
+            expect(result).to.eql([3, 2, 1, 2, 3])
+
+        })
+    });
+
+
+    describe("async import", () => {
+        it("should compile remote code", async () => {
+
+
+            const result = await interpret(`(httpGet url (status source) (compile source))`)(createContext({
+                httpGet,
+                compile:compile(interpret),
+                x:99,
+                //this url should return exactly "(1 2 x)" string
+                url: 'https://gist.githubusercontent.com/dismedia/f436e17e9145e7c051d4dfbbbf9f31af/raw/d8bc37909391ca08c1596105e905c76633a69a39/gistfile1.txt'
+
+            }))
+            expect(result).to.eql([1,2,99])
+        })
+    });
+
 });
 //await new Promise(resolve => setTimeout(resolve, 100))
+
+
+
+

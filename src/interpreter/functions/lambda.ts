@@ -1,38 +1,38 @@
 import {FunctionDef} from "./domain";
 import {createContext} from "../context";
+import {Compilable} from "../../domain";
 
 export const lambda: FunctionDef = (...elements) => async (context) => {
 
-    // return ((args)=>async (context)=>{
-    //
-    //
-    //
-    //
-    // })
+    let g = 0;
 
+    //(lambda (->(x y) (x y)) //compile params overrride
+    const params = await elements[0](context, async (input: Compilable[]) => {
+
+        const collectedValues = [];
+        for (let i = 0; i < input.length; i++) {
+            //(lambda ((->x ->y) (x y)) //compile params overrride
+            const name = await input[i](id=>id)
+            collectedValues.push(name as string)
+        }
+
+        return collectedValues as string[];
+
+    }) as string[]
+
+    console.log(params)
 
     return ((args) => async (context) => {
 
-        //resolver args
-        const resolvedArgs = await args(e => e)
+        const resolvedArg=await args(context);
 
-
-        const varDefElements: any = await elements[0]((id) => {
-            const valueFromContext = context(id)
-            return {
-                variableName: id,
-                valueFromContext
-            }
-        });
-
-        const scope = varDefElements.reduce((a, v, i) => {
-
-            a[varDefElements[i].variableName] = resolvedArgs[i]
-            return a;
+        const scope = params.reduce((a, v, i) => {
+            a[v] = resolvedArg[i]
+            return a
 
         }, {})
 
-        //execute
+        //(lambda ((x y) ->(x y)) //execute
         return await elements[1](createContext(scope, context))
 
     }) as any;

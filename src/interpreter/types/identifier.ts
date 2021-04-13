@@ -7,7 +7,6 @@ export const createIdentifier: TypeCreator<Identifier> = (value) =>async (contex
     //console.log(`getting identifier:${value} -> ${!!context(value)}`)
     const result= await Promise.resolve(context(value))
 
-    if(!!value ) console.error(`unknown idetifier ${value}`)
 
     return result;
 
