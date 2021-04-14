@@ -21,6 +21,12 @@ npm test
 ```
 
 
+### simple repl
+```
+npm run repl
+```
+
+
 ### how it works
 
 ```javascript
