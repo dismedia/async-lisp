@@ -1,7 +1,6 @@
 import {add, sumArray} from "./add";
 import {eq, gt, gte, lt, lte} from "./compare";
 import {delay} from "./async";
-import {compile} from "./compile";
 import {defun} from "./defun";
 import {httpGet} from "./http";
 import {iff} from "./if";
