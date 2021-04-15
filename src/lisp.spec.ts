@@ -5,7 +5,7 @@ import {compilableCreatorsVerbose} from "./interpreter/compilableCreators";
 import {add, sumArray} from "./interpreter/functions/add";
 import {eq, lte} from "./interpreter/functions/compare";
 import {lett} from "./interpreter/functions/let";
-import {head, headLazy, tail, tailLazy} from "./interpreter/functions/list-op";
+import {cons, head, headLazy, tail, tailLazy} from "./interpreter/functions/list-op";
 import {httpGet} from "./interpreter/functions/http";
 import {lambda} from "./interpreter/functions/lambda";
 import {compile} from "./interpreter/functions/compile";
@@ -101,6 +101,18 @@ describe("lisp", () => {
 
             const result = await interpret(`( tail(tail(tail(1 2 3 4)))) )`)(createContext({tail}))
             expect(result).to.eql([[4]]);
+
+        })
+
+
+        it("cons", async () => {
+
+            const result1 = await interpret(`( cons 55 (1 2 88) )`)(createContext({cons}))
+            expect(result1).to.eql([55, 1, 2, 88]);
+
+
+            const result2 = await interpret(`( cons (54) (cons (55) (1 2 88)) )`)(createContext({cons}))
+            expect(result2).to.eql([ [54], [55], 1, 2, 88]);
 
         })
 

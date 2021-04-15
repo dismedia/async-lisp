@@ -86,6 +86,7 @@ see: ```lisp.spec.ts```
 (head(head(tail((0 0) (99 5) 0))))
 (tailLazy (x (tailLazy(99 5 4)) ) )
 ( tail(tail(tail(1 2 3 4)))) )
+( cons (54) (cons (55) (1 2 88)) )
 ("bar" (compile source)) )
 (3 5 "foo")
 (lett ((x 9) (y 4) (z 1000 ))(compile source))
