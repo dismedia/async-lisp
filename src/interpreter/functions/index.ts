@@ -1,4 +1,4 @@
-import {add, sumArray} from "./add";
+import {add, div, divide, mult, sumArray} from "./add";
 import {eq, gt, gte, lt, lte} from "./compare";
 import {delay} from "./async";
 import {defun} from "./defun";
@@ -11,7 +11,7 @@ import {toint} from "./parse";
 
 
 export const std={
-    add,sumArray,
+    add,sumArray,div,mult,divide,
     delay,
     eq,gt,lt,lte,gte,
     defun,
