@@ -11,7 +11,6 @@ import {lambda} from "./lambda";
 import {delay} from "./async";
 import {head, tailLazy} from "./list-op";
 
-
 describe("functions", () => {
     it("should add", async () => {
 
@@ -194,7 +193,6 @@ describe("functions", () => {
 
     describe("parallel execution", () => {
         it("sholud be able execute async", async () => {
-
 
             const context = createContext({add, delay, six: 6, interval: 100});
 
