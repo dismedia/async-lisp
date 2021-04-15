@@ -109,6 +109,13 @@ see: ```lisp.spec.ts```
                 ) 
             (fib fibN)
         )
+        
+
+
 ```
-
-
+in repl
+```
+(readline "x?" x (compile x))
+x?(1 2 3 (add 2 3)) //user input
+[ 1, 2, 3, 5 ]
+```
