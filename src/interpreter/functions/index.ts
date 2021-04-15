@@ -1,13 +1,14 @@
 import {add, sumArray} from "./add";
 import {eq, gt, gte, lt, lte} from "./compare";
 import {delay} from "./async";
+import {compile} from "./compile";
 import {defun} from "./defun";
 import {httpGet} from "./http";
 import {iff} from "./if";
 import {lambda} from "./lambda";
 import {lett} from "./let";
 import {clist, cons, head, headLazy, tail, tailLazy} from "./list-op";
-
+import {toint} from "./parse";
 
 
 export const std={
@@ -19,6 +20,7 @@ export const std={
     iff,
     lambda,
     lett,
-    clist,cons,head,tail, headLazy,tailLazy
+    clist,cons,head,tail, headLazy,tailLazy,
+    toint
 
 }
