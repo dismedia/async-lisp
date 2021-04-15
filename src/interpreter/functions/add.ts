@@ -17,3 +17,13 @@ export const sumArray: FunctionDef = (...elements) => async (context) => {
 
 }
 
+
+export const div: FunctionDef = (...elements) => async (context)=>{
+
+    const a = await elements[0](context) as number;
+    const b = await elements[0](context) as number;
+
+    return Math.floor(a / b)
+
+
+}
