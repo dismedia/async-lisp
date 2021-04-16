@@ -1,4 +1,4 @@
-
+[![CI](https://github.com/dismedia/async-lisp/actions/workflows/main.yml/badge.svg)](https://github.com/dismedia/async-lisp/actions/workflows/main.yml)
 
 # Lisp ts interpreter
 with async processing 
